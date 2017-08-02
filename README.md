@@ -17,7 +17,7 @@ QSG_fit.py performes the PCA, producing a file containing a model that can go as
 
 For a list of available commandes type:
 '''
-./QSO_fit.py --help
+./QSG_fit.py --help
 '''
 from the src directory.
 
@@ -27,7 +27,7 @@ QSG.py generates random quasar templates given a model computed with QSG_fit.py.
 
 For a list of available commandes type:
 '''
-./QSO.py --help
+./QSG.py --help
 '''
 from the src directory.
 
