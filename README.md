@@ -1,4 +1,6 @@
 # Quasar Spectra Generator 
+#
+# T. Delubac
 
 The Quasar Spectra Generator (QSG) is a software intended to generates quasar spectra. Given a set of quasar spectra, it performs a principal component analysis (PCA) to decompose the original set, and is then able to generate random quasar templates from the principal components. It is made of two principal pieces of code: 
 
