@@ -30,8 +30,9 @@ redshift = arg.redshift
 output_file = arg.output_file
 seed = arg.seed
 display = arg.display
-input_p_values = arg.set_p_values
+input_p_values = arg.set_p_values 
 np.random.seed(seed)
+print(input_p_values)
 
 ''' Loading model '''
 with open(model_file,"rb") as model:
@@ -49,7 +50,7 @@ print('Delta_z between spectrum and model:', delta_z.min())
 
 ''' Computing coeffs '''
 bins_norm = np.linspace(-100,100,20000)
-bins_lognorm = np.linspace(0,1000000,10000)
+bins_lognorm = np.logspace(-1,7,20000)
 
 p_values = np.ones(len(mu[ind])) * -99
 p_values[:len(input_p_values)] = np.array(input_p_values)
@@ -68,8 +69,9 @@ for i,ip_value in enumerate(p_values):
 		else:
 			cdf = lambda x: lognorm.cdf(x,mu[ind][i],sigma[ind][i])
 			coeffs[i] = bins_lognorm[max(len(cdf(bins_lognorm)[cdf(bins_lognorm)<=ip_value])-1,0)]
+			print(bins_lognorm[max(len(cdf(bins_lognorm)[cdf(bins_lognorm)<=ip_value])-1,0)])
 
-
+print(coeffs)
 ''' Saving spectra '''
 lamb = lambda_centers[ind]*(1+redshift)
 flux = pcas[ind].inverse_transform(coeffs)

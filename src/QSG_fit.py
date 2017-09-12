@@ -35,6 +35,10 @@ qso = [ih[1].data[:number_of_spectra] for ih in h] # keeping only number_of_spec
 mean_redshift = [np.mean(iqso['Z_VI']) for iqso in qso]
 [ih.close() for ih in h]
 
+''' Keeping only QSOs with mean_flux > 0'''
+for iqso in qso:
+        iqso = iqso[np.mean(iqso['FLUX'])>0]
+
 ''' Binning in lambda '''
 lambda_min = []
 lambda_max = []
@@ -62,12 +66,20 @@ for ilambda_bins,iqso in zip(lambda_bins,qso):
 	specs.append(spec)
 	ivars.append(ivar)
 
-
-''' Subtracting mean '''
+''' Normalise to 1 '''
 for i,ispecs in enumerate(specs):
 	for ii,iispecs in enumerate(ispecs):
 		iispecs = np.array(iispecs)
-		specs[i][ii] = iispecs-iispecs.mean()
+		if iispecs.mean()>0: 
+			specs[i][ii] = iispecs/iispecs.mean()
+		else:
+			print("warning spec "+str(ii)+" of redshift bin "+str(i)+" as mean value <= 0")
+
+# ''' Subtracting mean '''
+# for i,ispecs in enumerate(specs):
+# 	for ii,iispecs in enumerate(ispecs):
+# 		iispecs = np.array(iispecs)
+# 		specs[i][ii] = iispecs-iispecs.mean()
 
 
 ''' fitting PCA '''
